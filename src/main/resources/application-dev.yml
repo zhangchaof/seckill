@@ -34,6 +34,16 @@ spring:
     cache: false
     #配置模板路径，默认是templates，可以不用配置
     prefix: classpath:/templates/
+
+  swagger:
+    learn:
+      base-package: com.learn.seckill.controller
+      description: seckill system
+      contact-email:
+      title: seckill
+      enable: true
+      version: 2.1
+
 #mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
