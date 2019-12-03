@@ -1,6 +1,7 @@
 package com.learn.seckill.service;
 
 import com.learn.seckill.dto.request.LoginReq;
+import com.learn.seckill.entity.SeckillUserEntity;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,4 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface SeckillUserService {
     boolean login(HttpServletResponse response, LoginReq req);
+
+    SeckillUserEntity getByToken(HttpServletResponse response, String token);
 }
