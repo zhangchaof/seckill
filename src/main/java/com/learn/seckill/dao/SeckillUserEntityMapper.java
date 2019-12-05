@@ -1,5 +1,6 @@
 package com.learn.seckill.dao;
 
+import com.learn.seckill.dto.request.LoginReq;
 import com.learn.seckill.entity.SeckillUserEntity;
 
 public interface SeckillUserEntityMapper {
@@ -50,4 +51,7 @@ public interface SeckillUserEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(SeckillUserEntity record);
+
+    SeckillUserEntity selectByReq(LoginReq req);
+
 }

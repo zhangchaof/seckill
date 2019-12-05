@@ -9,6 +9,6 @@ package com.learn.seckill.utils;
 public class RedisConstant {
     public static final String COOKI_NAME_TOKEN = "token";
     public static final String SECKILL_USER_PREFIX = "tk";
-    public static final int TOKEN_EXPIRE = 3600 * 24 * 2;
+    public static final int TOKEN_EXPIRE = 3600;
 
 }

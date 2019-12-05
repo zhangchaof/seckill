@@ -54,7 +54,7 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         String mobile = req.getMobile();
         String formPass = req.getPassword();
         //判断手机号是否存在
-        SeckillUserEntity user = userEntityMapper.selectByPrimaryKey(Long.parseLong(mobile));
+        SeckillUserEntity user = userEntityMapper.selectByReq(req);
         if (user == null) {
             throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }

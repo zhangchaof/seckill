@@ -44,11 +44,27 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <!--<table schema="seckill" tableName="test" domainObjectName="TestEntity" enableCountByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">-->
-            <!--<generatedKey column="ID" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table schema="seckill" tableName="test" domainObjectName="TestEntity" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
         <table schema="seckill" tableName="seckill_user" domainObjectName="SeckillUserEntity" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="seckill" tableName="goods" domainObjectName="GoodsEntity" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="seckill" tableName="order" domainObjectName="OrderInfoEntity" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="seckill" tableName="seckill_goods" domainObjectName="SeckillGoodsEntity" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="seckill" tableName="seckill_order" domainObjectName="SeckillOrderEntity" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>
