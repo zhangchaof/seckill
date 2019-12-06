@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2019-12-06 15:30:43
+Date: 2019-12-06 18:35:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `goods` (
 -- Records of goods
 -- ----------------------------
 INSERT INTO `goods` VALUES ('1', '0001', 'iphoneX', 'Apple iPhone X(A1865)64GB 银色 移动联通电信4G手机', '/img/iphoneX.png', 'Apple iPhoneX(A1865) 64GB银色 移动联通电信4G手机', '8765.00', '100');
-INSERT INTO `goods` VALUES ('2', '0002', '华为Mate9', '华为Mate9 4GB + 32GB', '/img/meta9.png', '华为Mate9 4GB + 32GB', '3212.00', '10');
+INSERT INTO `goods` VALUES ('2', '0002', '华为Mate9', '华为Mate9 4GB + 32GB', '/img/meta10.png', '华为Mate10 4GB + 32GB', '3212.00', '10');
 
 -- ----------------------------
 -- Table structure for order_info
