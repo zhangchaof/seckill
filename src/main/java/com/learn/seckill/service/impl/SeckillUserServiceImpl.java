@@ -33,6 +33,7 @@ public class SeckillUserServiceImpl implements SeckillUserService {
     @Autowired
     RedisUtil redisService;
 
+    @Override
     public SeckillUserEntity getByToken(HttpServletResponse response, String token) {
         if (StringUtils.isEmpty(token)) {
             return null;
@@ -47,14 +48,14 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         return user;
     }
 
+    @Override
     public boolean login(HttpServletResponse response, LoginReq req) {
         if (req == null) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
-        String mobile = req.getMobile();
         String formPass = req.getPassword();
         //判断手机号是否存在
-        SeckillUserEntity user = userEntityMapper.selectByReq(req);
+        SeckillUserEntity user = userEntityMapper.selectByMobile(req);
         if (user == null) {
             throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }

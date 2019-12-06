@@ -1,5 +1,6 @@
 package com.learn.seckill.controller;
 
+import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.SeckillUserEntity;
 import com.learn.seckill.service.SeckillUserService;
 import com.learn.seckill.utils.RedisUtil;
@@ -19,7 +20,7 @@ public class GoodsController {
 	RedisUtil redisService;
 	
     @RequestMapping("/to_list")
-    public String list(Model model, SeckillUserEntity user) {
+    public String list(Model model, SeckillUserVO user) {
     	model.addAttribute("user", user);
         return "goods_list";
     }

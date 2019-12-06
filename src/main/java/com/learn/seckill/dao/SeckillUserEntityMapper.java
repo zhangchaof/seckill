@@ -52,6 +52,6 @@ public interface SeckillUserEntityMapper {
      */
     int updateByPrimaryKey(SeckillUserEntity record);
 
-    SeckillUserEntity selectByReq(LoginReq req);
+    SeckillUserEntity selectByMobile(LoginReq req);
 
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2019-12-05 09:49:23
+Date: 2019-12-06 15:30:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `good_code` varchar(32) NOT NULL COMMENT '商品编码',
+  `goods_code` varchar(32) NOT NULL COMMENT '商品编码',
   `goods_name` varchar(255) DEFAULT NULL COMMENT '商品名称',
   `goods_title` varchar(255) DEFAULT NULL COMMENT '商品标题',
   `goods_img` varchar(64) DEFAULT NULL COMMENT '商品图片',
@@ -29,7 +29,7 @@ CREATE TABLE `goods` (
   `goods_price` decimal(10,2) DEFAULT '0.00' COMMENT '商品单价',
   `goods_stock` int(11) DEFAULT '0' COMMENT '商品库存，-1表示没有限制',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='商品详情';
 
 -- ----------------------------
 -- Records of goods
@@ -43,9 +43,9 @@ INSERT INTO `goods` VALUES ('2', '0002', '华为Mate9', '华为Mate9 4GB + 32GB'
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'order ID',
-  `order_no` varchar(32) NOT NULL COMMENT '订单编号',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
-  `good_code` varchar(32) DEFAULT NULL COMMENT '商品编码',
+  `order_no` varchar(64) NOT NULL COMMENT '订单编号',
+  `seckill_user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `goods_code` varchar(32) DEFAULT NULL COMMENT '商品编码',
   `delivery_addr_id` bigint(20) DEFAULT NULL COMMENT '收货地址',
   `goods_name` varchar(16) DEFAULT NULL COMMENT '商品名称',
   `goods_count` int(11) DEFAULT '0' COMMENT '商品数量',
@@ -67,7 +67,7 @@ CREATE TABLE `order_info` (
 DROP TABLE IF EXISTS `seckill_goods`;
 CREATE TABLE `seckill_goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `good_code` varchar(32) NOT NULL COMMENT '商品编码',
+  `goods_code` varchar(32) NOT NULL COMMENT '商品编码',
   `seckill_price` decimal(10,2) DEFAULT '0.00' COMMENT '秒杀价',
   `stock_count` int(11) DEFAULT '0' COMMENT '库存数量',
   `start_date` datetime DEFAULT NULL COMMENT '秒杀开始时间',
@@ -87,8 +87,8 @@ INSERT INTO `seckill_goods` VALUES ('2', '0002', '0.01', '9', '2019-12-05 09:48:
 DROP TABLE IF EXISTS `seckill_order`;
 CREATE TABLE `seckill_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '秒杀 order ID',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
-  `order_no` varchar(32) DEFAULT NULL COMMENT '订单编号',
+  `seckill_user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `order_no` varchar(64) DEFAULT NULL COMMENT '订单编号',
   `goods_code` varchar(32) DEFAULT NULL COMMENT '商品编码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -103,6 +103,8 @@ CREATE TABLE `seckill_order` (
 DROP TABLE IF EXISTS `seckill_user`;
 CREATE TABLE `seckill_user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `user_id` varchar(20) NOT NULL COMMENT '用户id',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号码',
   `nickname` varchar(255) NOT NULL,
   `password` varchar(32) DEFAULT NULL COMMENT 'MD5(MD5(pass明文+固定salt) + salt)',
   `salt` varchar(10) DEFAULT NULL,
@@ -116,7 +118,7 @@ CREATE TABLE `seckill_user` (
 -- ----------------------------
 -- Records of seckill_user
 -- ----------------------------
-INSERT INTO `seckill_user` VALUES ('18721259143', 'zcf', 'b7797cce01b4b131b433b6acf4add449', '1a2b3c4d', null, '2019-12-03 09:52:32', '2019-12-03 09:52:32', '1');
+INSERT INTO `seckill_user` VALUES ('1', '1', '18761738055', 'test', 'b7797cce01b4b131b433b6acf4add449', '1a2b3c4d', null, '2019-12-06 15:13:52', '2019-12-06 15:13:57', '1');
 
 -- ----------------------------
 -- Table structure for test

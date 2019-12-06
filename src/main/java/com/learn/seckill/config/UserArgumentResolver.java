@@ -1,9 +1,11 @@
 package com.learn.seckill.config;
 
+import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.SeckillUserEntity;
 import com.learn.seckill.service.SeckillUserService;
 import com.learn.seckill.utils.RedisConstant;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -30,11 +32,11 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         Class<?> clazz = parameter.getParameterType();
-        return clazz == SeckillUserEntity.class;
+        return clazz == SeckillUserVO.class;
     }
 
     @Override
-    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
 
@@ -44,7 +46,10 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
             return null;
         }
         String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
-        return userService.getByToken(response, token);
+        SeckillUserEntity userEntity = userService.getByToken(response, token);
+        SeckillUserVO userVO = new SeckillUserVO();
+        BeanUtils.copyProperties(userEntity, userVO);
+        return userVO;
     }
 
     private String getCookieValue(HttpServletRequest request, String cookieName) {
