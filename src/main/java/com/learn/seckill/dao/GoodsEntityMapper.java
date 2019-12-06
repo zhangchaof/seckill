@@ -1,6 +1,9 @@
 package com.learn.seckill.dao;
 
+import com.learn.seckill.dto.GoodsVo;
 import com.learn.seckill.entity.GoodsEntity;
+
+import java.util.List;
 
 public interface GoodsEntityMapper {
     /**
@@ -58,4 +61,6 @@ public interface GoodsEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(GoodsEntity record);
+
+    List<GoodsVo> listGoodsVo();
 }

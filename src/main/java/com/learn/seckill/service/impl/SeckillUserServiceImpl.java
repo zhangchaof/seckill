@@ -33,6 +33,13 @@ public class SeckillUserServiceImpl implements SeckillUserService {
     @Autowired
     RedisUtil redisService;
 
+    /**
+     * 获取用户登录信息
+     * @param response
+     * @param token
+     * @return
+     */
+
     @Override
     public SeckillUserEntity getByToken(HttpServletResponse response, String token) {
         if (StringUtils.isEmpty(token)) {
@@ -48,6 +55,12 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         return user;
     }
 
+    /**
+     * 用户登录
+     * @param response
+     * @param req
+     * @return
+     */
     @Override
     public boolean login(HttpServletResponse response, LoginReq req) {
         if (req == null) {
