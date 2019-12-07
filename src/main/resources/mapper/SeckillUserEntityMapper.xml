@@ -183,10 +183,9 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByMobile" resultMap="BaseResultMap"
-          parameterType ="com.learn.seckill.dto.request.LoginReq">
+  <select id="selectByMobile" parameterType="com.learn.seckill.dto.request.LoginReq" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List" />
     from seckill_user
     where mobile = #{mobile,jdbcType=VARCHAR}
   </select>
