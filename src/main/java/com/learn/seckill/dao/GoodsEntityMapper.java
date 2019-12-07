@@ -63,4 +63,6 @@ public interface GoodsEntityMapper {
     int updateByPrimaryKey(GoodsEntity record);
 
     List<GoodsVo> listGoodsVo();
+
+    GoodsVo getGoodsVoByGoodsCode(String goodsCode);
 }

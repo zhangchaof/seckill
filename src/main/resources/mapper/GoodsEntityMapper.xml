@@ -202,4 +202,9 @@
     <select id="listGoodsVo" resultMap="GoodsMap">
          select g.*,sg.stock_count, sg.start_date, sg.end_date,sg.seckill_price from seckill_goods sg left join goods g on sg.goods_code = g.goods_code
     </select>
+
+    <select id="getGoodsVoByGoodsCode" resultMap="GoodsMap">
+         select g.*,sg.stock_count, sg.start_date, sg.end_date,sg.seckill_price from seckill_goods sg left join goods g on sg.goods_code = g.goods_code
+        where g.goods_code =#{goodsCode,jdbcType=VARCHAR}
+    </select>
 </mapper>

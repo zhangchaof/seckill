@@ -23,4 +23,9 @@ public class GoodsServiceImpl implements GoodsService {
     public List<GoodsVo> listGoodsVo() {
         return goodsEntityMapper.listGoodsVo();
     }
+
+    @Override
+    public GoodsVo getGoodsVoByGoodsCode(String goodsCode) {
+        return goodsEntityMapper.getGoodsVoByGoodsCode(goodsCode);
+    }
 }
