@@ -57,7 +57,7 @@ public class SeckillController {
             return "seckill_fail";
         }
         //判断是否已经秒杀到了
-        SeckillOrderVO order = orderService.getSeckillOrderBySeckillUserIdGoodsCode(user.getUserId(), goodsCode);
+        SeckillOrderVO order = seckillService.getSeckillOrderBySeckillUserIdGoodsCode(user.getUserId(), goodsCode);
         if (order != null) {
             model.addAttribute("errmsg", CodeMsg.REPEATE_SECKILL.getMsg());
             return "seckill_fail";

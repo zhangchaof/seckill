@@ -1,6 +1,8 @@
 package com.learn.seckill.dao;
 
+import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.entity.OrderEntity;
+import org.apache.ibatis.annotations.Param;
 
 public interface OrderEntityMapper {
     /**
@@ -50,4 +52,5 @@ public interface OrderEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(OrderEntity record);
+
 }

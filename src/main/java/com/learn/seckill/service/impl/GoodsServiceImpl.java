@@ -2,6 +2,7 @@ package com.learn.seckill.service.impl;
 
 import com.learn.seckill.dao.GoodsEntityMapper;
 import com.learn.seckill.dto.GoodsVo;
+import com.learn.seckill.entity.SeckillGoodsEntity;
 import com.learn.seckill.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
  **/
 @Service
 public class GoodsServiceImpl implements GoodsService {
+
     @Autowired
     private GoodsEntityMapper goodsEntityMapper;
 
@@ -28,4 +30,5 @@ public class GoodsServiceImpl implements GoodsService {
     public GoodsVo getGoodsVoByGoodsCode(String goodsCode) {
         return goodsEntityMapper.getGoodsVoByGoodsCode(goodsCode);
     }
+
 }

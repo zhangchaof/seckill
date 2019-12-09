@@ -65,4 +65,6 @@ public interface GoodsEntityMapper {
     List<GoodsVo> listGoodsVo();
 
     GoodsVo getGoodsVoByGoodsCode(String goodsCode);
+
+
 }

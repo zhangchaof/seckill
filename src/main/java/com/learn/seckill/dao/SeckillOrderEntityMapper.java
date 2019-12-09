@@ -1,6 +1,8 @@
 package com.learn.seckill.dao;
 
+import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.entity.SeckillOrderEntity;
+import org.apache.ibatis.annotations.Param;
 
 public interface SeckillOrderEntityMapper {
     /**
@@ -50,4 +52,11 @@ public interface SeckillOrderEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(SeckillOrderEntity record);
+
+    /**
+     * @param userId
+     * @param goodsCode
+     * @return
+     */
+    SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(@Param("seckillUserId") String seckillUserId, @Param("goodsCode") String goodsCode);
 }

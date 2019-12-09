@@ -1,7 +1,9 @@
 package com.learn.seckill.service.impl;
 
+import com.learn.seckill.dao.OrderEntityMapper;
 import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +14,9 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Override
-    public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(String userId, String goodsCode) {
-        return null;
-    }
+
+    @Autowired
+    private OrderEntityMapper orderEntityMapper;
+
+
 }

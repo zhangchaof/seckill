@@ -50,4 +50,6 @@ public interface SeckillGoodsEntityMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(SeckillGoodsEntity record);
+
+    int reduceStock(SeckillGoodsEntity seckillGoodsEntity);
 }
