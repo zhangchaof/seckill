@@ -40,8 +40,8 @@ INSERT INTO `goods` VALUES ('2', '0002', '华为Mate9', '华为Mate9 4GB + 32GB'
 -- ----------------------------
 -- Table structure for order_info
 -- ----------------------------
-DROP TABLE IF EXISTS `order_info`;
-CREATE TABLE `order_info` (
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'order ID',
   `order_no` varchar(64) NOT NULL COMMENT '订单编号',
   `seckill_user_id` bigint(20) DEFAULT NULL COMMENT '用户id',

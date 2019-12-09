@@ -5,12 +5,12 @@ import com.learn.seckill.dto.GoodsVo;
 import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
-import com.learn.seckill.service.GoodsService;
-import com.learn.seckill.service.OrderService;
-import com.learn.seckill.service.SeckillGoodsService;
-import com.learn.seckill.service.SeckillService;
+import com.learn.seckill.entity.OrderEntity;
+import com.learn.seckill.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @program: seckill:SeckillServiceImpl
@@ -28,10 +28,10 @@ public class SeckillServiceImpl implements SeckillService {
     private OrderService orderService;
 
     @Autowired
-    private GoodsService goodsService;
+    private SeckillGoodsService seckillGoodsService;
 
     @Autowired
-    private SeckillGoodsService seckillGoodsService;
+    private SeckillOrderService seckillOrderService;
 
     @Override
     public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(String userId, String goodsCode) {
@@ -39,12 +39,16 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
+    @Transactional
     public OrderVO seckill(SeckillUserVO userVO, GoodsVo goods) {
         //减库存
         seckillGoodsService.reduceStock(goods);
         //下订单
-
+        OrderEntity orderEntity = orderService.createOrder(userVO, goods);
         // 写入秒杀订单
-        return orderService.createOrder(user, goods);
+        seckillOrderService.createOrder(orderEntity);
+        OrderVO orderVO = new OrderVO();
+        BeanUtils.copyProperties(orderEntity,orderVO);
+        return orderVO;
     }
 }
