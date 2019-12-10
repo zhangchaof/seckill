@@ -40,7 +40,7 @@ public class SeckillServiceImpl implements SeckillService {
     private SeckillOrderService seckillOrderService;
 
     @Override
-    public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(String userId, String goodsCode) {
+    public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(Long userId, String goodsCode) {
         SeckillOrderVO seckillOrderVO = null;
         SeckillOrderEntity seckillOrderEntity = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
         if (!Objects.isNull(seckillOrderEntity)) {

@@ -12,9 +12,9 @@ import java.util.Date;
  * @create: 2019-12-06 14:16
  **/
 @Data
-@ApiModel(value = "SeckillUserVO",description = "秒杀用户展示")
+@ApiModel(value = "SeckillUserVO", description = "秒杀用户展示")
 public class SeckillUserVO {
-    private String userId;
+    private Long userId;
     private String mobile;
     private String nickname;
     private String password;

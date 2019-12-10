@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setOrderChannel((byte) 1);
         orderEntity.setStatus((byte) 0);
         orderEntity.setOrderNo("orderNo");
-        orderEntity.setSeckillUserId(Long.valueOf(user.getUserId()));
+        orderEntity.setSeckillUserId(user.getUserId());
         orderEntityMapper.insert(orderEntity);
         return orderEntity;
     }

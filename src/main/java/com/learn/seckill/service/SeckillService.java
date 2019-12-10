@@ -13,7 +13,7 @@ import com.learn.seckill.dto.SeckillUserVO;
  */
 public interface SeckillService {
 
-    SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(String userId, String goodsCode);
+    SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(Long userId, String goodsCode);
 
     OrderVO seckill(SeckillUserVO userVO, GoodsVo goods);
 }
