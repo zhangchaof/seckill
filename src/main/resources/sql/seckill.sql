@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2019-12-06 18:35:08
+Date: 2019-12-10 11:51:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ INSERT INTO `goods` VALUES ('1', '0001', 'iphoneX', 'Apple iPhone X(A1865)64GB �
 INSERT INTO `goods` VALUES ('2', '0002', '华为Mate9', '华为Mate9 4GB + 32GB', '/img/meta10.png', '华为Mate10 4GB + 32GB', '3212.00', '10');
 
 -- ----------------------------
--- Table structure for order_info
+-- Table structure for order
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
@@ -55,11 +55,13 @@ CREATE TABLE `order` (
   `create_date` datetime DEFAULT NULL COMMENT '订单创建时间',
   `pay_date` datetime DEFAULT NULL COMMENT '支付时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Records of order_info
+-- Records of order
 -- ----------------------------
+INSERT INTO `order` VALUES ('4', 'orderNo', '1', '0001', '0', 'iphoneX', '1', '0.01', '1', '0', '2019-12-10 11:16:36', null);
+INSERT INTO `order` VALUES ('5', 'orderNo', '1', '0001', '0', 'iphoneX', '1', '0.01', '1', '0', '2019-12-10 11:46:44', null);
 
 -- ----------------------------
 -- Table structure for seckill_goods
@@ -78,8 +80,8 @@ CREATE TABLE `seckill_goods` (
 -- ----------------------------
 -- Records of seckill_goods
 -- ----------------------------
-INSERT INTO `seckill_goods` VALUES ('1', '0001', '0.01', '4', '2019-12-05 09:48:33', '2019-12-05 09:48:33');
-INSERT INTO `seckill_goods` VALUES ('2', '0002', '0.01', '9', '2019-12-05 09:48:33', '2019-12-05 09:48:33');
+INSERT INTO `seckill_goods` VALUES ('1', '0001', '0.01', '2', '2019-12-08 09:48:33', '2019-12-11 09:48:33');
+INSERT INTO `seckill_goods` VALUES ('2', '0002', '0.01', '9', '2019-12-05 09:48:33', '2019-12-07 16:32:33');
 
 -- ----------------------------
 -- Table structure for seckill_order
@@ -91,7 +93,7 @@ CREATE TABLE `seckill_order` (
   `order_no` varchar(64) DEFAULT NULL COMMENT '订单编号',
   `goods_code` varchar(32) DEFAULT NULL COMMENT '商品编码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of seckill_order
@@ -103,7 +105,7 @@ CREATE TABLE `seckill_order` (
 DROP TABLE IF EXISTS `seckill_user`;
 CREATE TABLE `seckill_user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `user_id` varchar(20) NOT NULL COMMENT '用户id',
+  `user_id` int(20) NOT NULL COMMENT '用户id',
   `mobile` varchar(20) DEFAULT NULL COMMENT '手机号码',
   `nickname` varchar(255) NOT NULL,
   `password` varchar(32) DEFAULT NULL COMMENT 'MD5(MD5(pass明文+固定salt) + salt)',
@@ -113,7 +115,7 @@ CREATE TABLE `seckill_user` (
   `last_login_date` datetime DEFAULT NULL COMMENT '最后登录时间',
   `login_count` int(11) DEFAULT NULL COMMENT '登录次数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18721259144 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of seckill_user
