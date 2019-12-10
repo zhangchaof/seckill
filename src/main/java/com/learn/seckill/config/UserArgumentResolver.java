@@ -17,6 +17,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 /**
  * @program: seckill
@@ -54,6 +55,9 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
+        if (Objects.isNull(cookies)) {
+            return null;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieName)) {
                 return cookie.getValue();

@@ -10,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+/**
+ * @author chaofan.zhang
+ */
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
@@ -26,7 +30,7 @@ public class GoodsController {
     @Autowired
     GoodsService goodsService;
 
-    @RequestMapping("/to_list")
+    @RequestMapping(value = "/to_list", method = RequestMethod.GET)
     public String list(Model model, SeckillUserVO user) {
         //查询商品列表
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
