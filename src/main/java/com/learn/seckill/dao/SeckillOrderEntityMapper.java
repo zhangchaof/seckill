@@ -58,5 +58,5 @@ public interface SeckillOrderEntityMapper {
      * @param goodsCode
      * @return
      */
-    SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(@Param("seckillUserId") String seckillUserId, @Param("goodsCode") String goodsCode);
+    SeckillOrderEntity getSeckillOrderBySeckillUserIdGoodsCode(@Param("seckillUserId") String seckillUserId, @Param("goodsCode") String goodsCode);
 }

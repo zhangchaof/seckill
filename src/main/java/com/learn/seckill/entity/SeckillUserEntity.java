@@ -19,7 +19,7 @@ public class SeckillUserEntity {
      *
      * @mbg.generated
      */
-    private String userId;
+    private Long userId;
 
     /**
      *
@@ -125,7 +125,7 @@ public class SeckillUserEntity {
      *
      * @mbg.generated
      */
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -137,8 +137,8 @@ public class SeckillUserEntity {
      *
      * @mbg.generated
      */
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Long userId) {
+        this.userId = userId ;
     }
 
     /**
