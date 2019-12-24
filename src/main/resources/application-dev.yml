@@ -22,9 +22,10 @@ spring:
     timeout: 1000
     jedis:
       pool:
-        max-active: 10
+        max-active: 1000
         max-idle: 0
         max-wait: -1
+        min-idle: 10
   thymeleaf:
     #模板的模式，支持 HTML, XML TEXT JAVASCRIPT
     mode: HTML5
