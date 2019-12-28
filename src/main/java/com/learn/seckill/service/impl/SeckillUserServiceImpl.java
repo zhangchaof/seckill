@@ -33,8 +33,24 @@ public class SeckillUserServiceImpl implements SeckillUserService {
     @Autowired
     RedisUtil redisService;
 
+    public SeckillUserEntity selectByMobile(LoginReq req) {
+        //取缓存
+        Object seckillUserObj = redisService.get(req.getMobile());
+        if (seckillUserObj != null) {
+            SeckillUserEntity userEntity = (SeckillUserEntity) seckillUserObj;
+            return userEntity;
+        }
+        //取数据库
+        SeckillUserEntity user = userEntityMapper.selectByMobile(req);
+        if (user != null) {
+            redisService.set(req.getMobile(), user);
+        }
+        return user;
+    }
+
     /**
      * 获取用户登录信息
+     *
      * @param response
      * @param token
      * @return
@@ -57,6 +73,7 @@ public class SeckillUserServiceImpl implements SeckillUserService {
 
     /**
      * 用户登录
+     *
      * @param response
      * @param req
      * @return
@@ -68,7 +85,7 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         }
         String formPass = req.getPassword();
         //判断手机号是否存在
-        SeckillUserEntity user = userEntityMapper.selectByMobile(req);
+        SeckillUserEntity user = selectByMobile(req);
         if (user == null) {
             throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }
