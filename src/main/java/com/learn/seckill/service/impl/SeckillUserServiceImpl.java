@@ -101,6 +101,25 @@ public class SeckillUserServiceImpl implements SeckillUserService {
         addCookie(response, token, user);
         return true;
     }
+    // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
+    //更新数据库,失效缓存，设置缓存
+    public boolean updatePassword(String token, LoginReq req, String formPass) {
+        //取user
+        SeckillUserEntity user = selectByMobile(req);
+        if(user == null) {
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        SeckillUserEntity toBeUpdate = new SeckillUserEntity();
+        toBeUpdate.setMobile(req.getMobile());
+        toBeUpdate.setPassword(MD5Util.formPassToDBPass(formPass, user.getSalt()));
+        userEntityMapper.updateByPrimaryKeySelective(toBeUpdate);
+        //处理缓存
+        redisService.del(req.getMobile());
+        user.setPassword(toBeUpdate.getPassword());
+        redisService.set(SECKILL_USER_PREFIX.concat(token), user);
+        return true;
+    }
 
     private void addCookie(HttpServletResponse response, String token, SeckillUserEntity user) {
         redisService.set(SECKILL_USER_PREFIX.concat(token), user, TOKEN_EXPIRE);
