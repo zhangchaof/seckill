@@ -11,4 +11,8 @@ public class RedisConstant {
     public static final String SECKILL_USER_PREFIX = "tk";
     public static final int TOKEN_EXPIRE = 3600;
 
+    public static final int GOODS_EXPIRE = 60;
+    public static final String GOODS_LIST ="goodsList";
+    public static final String  GOODS_DETAILS = "goodsDetails";
+
 }
