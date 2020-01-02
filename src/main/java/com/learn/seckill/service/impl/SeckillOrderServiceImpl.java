@@ -4,8 +4,11 @@ import com.learn.seckill.dao.SeckillOrderEntityMapper;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
 import com.learn.seckill.service.SeckillOrderService;
+import com.learn.seckill.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.learn.seckill.utils.RedisConstant.SECKILL_USER_ORDER;
 
 /**
  * @program: seckill
@@ -18,12 +21,17 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
     @Autowired
     private SeckillOrderEntityMapper seckillOrderEntityMapper;
 
+    @Autowired
+    RedisUtil redisService;
+
     @Override
     public int createOrder(OrderEntity orderEntity) {
         SeckillOrderEntity seckillOrderEntity = new SeckillOrderEntity();
         seckillOrderEntity.setGoodsCode(orderEntity.getGoodsCode());
         seckillOrderEntity.setOrderNo(orderEntity.getOrderNo());
         seckillOrderEntity.setSeckillUserId(orderEntity.getSeckillUserId());
+
+        redisService.set(SECKILL_USER_ORDER.concat(orderEntity.getSeckillUserId().toString()).concat(orderEntity.getGoodsCode()),orderEntity);
         return seckillOrderEntityMapper.insert(seckillOrderEntity);
     }
 }

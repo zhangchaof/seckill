@@ -145,3 +145,6 @@ INSERT INTO `test` VALUES ('7', 'test40', '40');
 INSERT INTO `test` VALUES ('8', 'test40', '40');
 INSERT INTO `test` VALUES ('9', 'test40', '40');
 INSERT INTO `test` VALUES ('10', 'test60', '60');
+
+-- 防超卖
+ALTER TABLE `seckill_order` ADD UNIQUE INDEX `index_user_id` (`seckill_user_id`) USING BTREE ;

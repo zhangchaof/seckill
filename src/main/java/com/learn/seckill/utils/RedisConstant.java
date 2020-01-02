@@ -14,5 +14,6 @@ public class RedisConstant {
     public static final int GOODS_EXPIRE = 60;
     public static final String GOODS_LIST ="goodsList";
     public static final String  GOODS_DETAILS = "goodsDetails";
+    public static final String SECKILL_USER_ORDER = "seckill_user_order";
 
 }

@@ -134,6 +134,6 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="reduceStock" parameterType="com.learn.seckill.entity.SeckillGoodsEntity">
-        update seckill_goods set stock_count = stock_count - 1 where goods_code =  #{goodsCode,jdbcType=VARCHAR}
+        update seckill_goods set stock_count = stock_count - 1 where goods_code =  #{goodsCode,jdbcType=VARCHAR} and  stock_count > 0
   </update>
 </mapper>

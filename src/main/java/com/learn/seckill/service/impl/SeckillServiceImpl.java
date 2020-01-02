@@ -11,12 +11,15 @@ import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillGoodsService;
 import com.learn.seckill.service.SeckillOrderService;
 import com.learn.seckill.service.SeckillService;
+import com.learn.seckill.utils.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+
+import static com.learn.seckill.utils.RedisConstant.SECKILL_USER_ORDER;
 
 /**
  * @program: seckill:SeckillServiceImpl
@@ -39,10 +42,15 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SeckillOrderService seckillOrderService;
 
+    @Autowired
+    RedisUtil redisService;
+
     @Override
     public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(Long userId, String goodsCode) {
         SeckillOrderVO seckillOrderVO = null;
-        SeckillOrderEntity seckillOrderEntity = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
+        //  SeckillOrderEntity seckillOrderEntity = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
+        String key = SECKILL_USER_ORDER + userId + goodsCode;
+        SeckillOrderEntity seckillOrderEntity = (SeckillOrderEntity) redisService.get(key);
         if (!Objects.isNull(seckillOrderEntity)) {
             seckillOrderVO = new SeckillOrderVO();
             BeanUtils.copyProperties(seckillOrderEntity, seckillOrderVO);
