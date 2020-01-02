@@ -1,7 +1,9 @@
 package com.learn.seckill.controller;
 
+import com.learn.seckill.dto.GoodsDetailVo;
 import com.learn.seckill.dto.GoodsVo;
 import com.learn.seckill.dto.SeckillUserVO;
+import com.learn.seckill.result.Result;
 import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.SeckillUserService;
 import com.learn.seckill.utils.RedisConstant;
@@ -70,8 +72,8 @@ public class GoodsController {
     @ApiOperation(value = "查询商品详情")
     @RequestMapping(value = "/to_detail/{goodsCode}", produces = "text/html")
     @ResponseBody
-    public String detail(HttpServletRequest request, HttpServletResponse response, Model model, SeckillUserVO user,
-                         @PathVariable("goodsCode") String goodsCode) {
+    public String detailRedisHtml(HttpServletRequest request, HttpServletResponse response, Model model, SeckillUserVO user,
+                                  @PathVariable("goodsCode") String goodsCode) {
         model.addAttribute("user", user);
         //取缓存
         Object detailsGoods = redisService.get(RedisConstant.GOODS_DETAILS.concat(goodsCode));
@@ -111,5 +113,35 @@ public class GoodsController {
             redisService.set(RedisConstant.GOODS_DETAILS.concat(goodsCode), html, GOODS_EXPIRE);
         }
         return html;
+    }
+
+    @RequestMapping(value = "/detail/{goodsCode}", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, SeckillUserVO user,
+                                        @PathVariable("goodsCode") String goodsCode) {
+        GoodsVo goods = goodsService.getGoodsVoByGoodsCode(goodsCode);
+        long startAt = goods.getStartDate().getTime();
+        long endAt = goods.getEndDate().getTime();
+        long now = System.currentTimeMillis();
+        int seckillStatus = 0;
+        int remainSeconds = 0;
+        //秒杀还没开始，倒计时
+        if (now < startAt) {
+            seckillStatus = 0;
+            remainSeconds = (int) ((startAt - now) / 1000);
+            //秒杀已经结束
+        } else if (now > endAt) {
+            seckillStatus = 2;
+            remainSeconds = -1;
+        } else {//秒杀进行中
+            seckillStatus = 1;
+            remainSeconds = 0;
+        }
+        GoodsDetailVo vo = new GoodsDetailVo();
+        vo.setGoods(goods);
+        vo.setUser(user);
+        vo.setRemainSeconds(remainSeconds);
+        vo.setSeckillStatus(seckillStatus);
+        return Result.success(vo);
     }
 }

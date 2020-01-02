@@ -5,6 +5,7 @@ import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.result.CodeMsg;
+import com.learn.seckill.result.Result;
 import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillService;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @program: seckill:SeckillController
@@ -67,5 +70,29 @@ public class SeckillController {
         model.addAttribute("orderInfo", orderInfo);
         model.addAttribute("goods", goods);
         return "order_detail";
+    }
+
+    @RequestMapping("/seckill")
+    @ResponseBody
+    public Result<OrderVO> seckill(Model model, SeckillUserVO user,
+                       @RequestParam("goodsCode") String goodsCode) {
+        model.addAttribute("user", user);
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        //判断库存
+        GoodsVo goods = goodsService.getGoodsVoByGoodsCode(goodsCode);
+        int stock = goods.getStockCount();
+        if (stock <= 0) {
+            return Result.error(CodeMsg.SECKILL_OVER);
+        }
+        //判断是否已经秒杀到了
+        SeckillOrderVO order = seckillService.getSeckillOrderBySeckillUserIdGoodsCode(user.getUserId(), goodsCode);
+        if (order != null) {
+            return Result.error(CodeMsg.REPEATE_SECKILL);
+        }
+        //减库存 下订单 写入秒杀订单
+        OrderVO orderInfo = seckillService.seckill(user, goods);
+        return Result.success(orderInfo);
     }
 }

@@ -2,9 +2,11 @@ package com.learn.seckill.service.impl;
 
 import com.learn.seckill.dao.OrderEntityMapper;
 import com.learn.seckill.dto.GoodsVo;
+import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.service.OrderService;
+import com.learn.seckill.utils.IdGen;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,9 +38,17 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setGoodsPrice(goods.getSeckillPrice());
         orderEntity.setOrderChannel((byte) 1);
         orderEntity.setStatus((byte) 0);
-        orderEntity.setOrderNo("orderNo");
+        orderEntity.setOrderNo(IdGen.get().nextId() + "");
         orderEntity.setSeckillUserId(user.getUserId());
         orderEntityMapper.insert(orderEntity);
         return orderEntity;
+    }
+
+    @Override
+    public OrderVO getOrderByNo(String orderNo) {
+        OrderVO orderVO = new OrderVO();
+        OrderEntity order = orderEntityMapper.getOrderByNo(orderNo);
+        BeanUtils.copyProperties(order, orderVO);
+        return orderVO;
     }
 }

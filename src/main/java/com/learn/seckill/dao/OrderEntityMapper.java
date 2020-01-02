@@ -1,6 +1,6 @@
 package com.learn.seckill.dao;
 
-import com.learn.seckill.dto.SeckillOrderVO;
+import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.entity.OrderEntity;
 import org.apache.ibatis.annotations.Param;
 
@@ -53,4 +53,5 @@ public interface OrderEntityMapper {
      */
     int updateByPrimaryKey(OrderEntity record);
 
+    OrderEntity getOrderByNo(@Param("orderNo") String orderNo);
 }
