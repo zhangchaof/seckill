@@ -6,7 +6,7 @@ import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.service.OrderService;
-import com.learn.seckill.utils.IdGen;
+import com.learn.seckill.utils.SnowflakeIdWorker;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setGoodsPrice(goods.getSeckillPrice());
         orderEntity.setOrderChannel((byte) 1);
         orderEntity.setStatus((byte) 0);
-        orderEntity.setOrderNo(IdGen.get().nextId() + "");
+        orderEntity.setOrderNo(SnowflakeIdWorker.generateId() + "");
         orderEntity.setSeckillUserId(user.getUserId());
         orderEntityMapper.insert(orderEntity);
         return orderEntity;
