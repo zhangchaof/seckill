@@ -44,7 +44,21 @@ spring:
       title: seckill
       enable: true
       version: 2.1
-
+#资源静态化static
+  resources:
+    add-mappings: true
+    cache:
+      period: 3600
+    chain:
+      cache: true
+      enabled: true
+      compressed: true
+      html-application-cache: true
+    static-locations: classpath:/static/
+#自定义图片
+  mvc:
+    favicon:
+      enabled: false
 #mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
