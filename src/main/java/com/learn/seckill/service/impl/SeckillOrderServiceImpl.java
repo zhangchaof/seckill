@@ -3,12 +3,12 @@ package com.learn.seckill.service.impl;
 import com.learn.seckill.dao.SeckillOrderEntityMapper;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
+import com.learn.seckill.redis.RedisUtil;
 import com.learn.seckill.service.SeckillOrderService;
-import com.learn.seckill.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.learn.seckill.utils.RedisConstant.SECKILL_USER_ORDER;
+import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
 
 /**
  * @program: seckill

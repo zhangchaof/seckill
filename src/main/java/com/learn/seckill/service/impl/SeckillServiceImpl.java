@@ -7,11 +7,11 @@ import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
+import com.learn.seckill.redis.RedisUtil;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillGoodsService;
 import com.learn.seckill.service.SeckillOrderService;
 import com.learn.seckill.service.SeckillService;
-import com.learn.seckill.utils.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import static com.learn.seckill.utils.RedisConstant.SECKILL_USER_ORDER;
+import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
+
 
 /**
  * @program: seckill:SeckillServiceImpl
