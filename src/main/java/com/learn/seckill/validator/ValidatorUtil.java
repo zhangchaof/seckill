@@ -1,4 +1,4 @@
-package com.learn.seckill.utils;
+package com.learn.seckill.validator;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -10,13 +10,12 @@ import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillService;
 import com.learn.seckill.service.SeckillUserService;
-import com.learn.seckill.utils.RedisUtil;
+import com.learn.seckill.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 

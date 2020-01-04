@@ -1,4 +1,4 @@
-package com.learn.seckill.utils;
+package com.learn.seckill.redis;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +120,7 @@ public class RedisUtil {
 
 
 
-    private <T> String beanToString(T value) {
+    public static <T> String beanToString(T value) {
         if (value == null) {
             return null;
         }
@@ -136,7 +136,7 @@ public class RedisUtil {
         }
     }
 
-    private <T> T stringToBean(String str, Class<T> clazz) {
+    public static  <T> T stringToBean(String str, Class<T> clazz) {
         if (str == null || str.length() <= 0 || clazz == null) {
             return null;
         }

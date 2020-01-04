@@ -3,7 +3,7 @@ package com.learn.seckill.config;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.SeckillUserEntity;
 import com.learn.seckill.service.SeckillUserService;
-import com.learn.seckill.utils.RedisConstant;
+import com.learn.seckill.redis.RedisConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
