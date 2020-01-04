@@ -1,6 +1,5 @@
 package com.learn.seckill.validator;
 
-import com.learn.seckill.utils.ValidatorUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;

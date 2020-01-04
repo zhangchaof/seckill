@@ -1,6 +1,6 @@
 package com.learn.seckill;
 
-import com.learn.seckill.utils.RedisUtil;
+import com.learn.seckill.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

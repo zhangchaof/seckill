@@ -1,4 +1,4 @@
-package com.learn.seckill.config;
+package com.learn.seckill.redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

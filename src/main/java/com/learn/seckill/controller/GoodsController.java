@@ -6,8 +6,8 @@ import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.result.Result;
 import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.SeckillUserService;
-import com.learn.seckill.utils.RedisConstant;
-import com.learn.seckill.utils.RedisUtil;
+import com.learn.seckill.redis.RedisConstant;
+import com.learn.seckill.redis.RedisUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static com.learn.seckill.utils.RedisConstant.GOODS_EXPIRE;
+import static com.learn.seckill.redis.RedisConstant.GOODS_EXPIRE;
 
 /**
  * @author chaofan.zhang

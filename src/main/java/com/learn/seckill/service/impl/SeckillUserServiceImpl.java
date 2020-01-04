@@ -7,7 +7,7 @@ import com.learn.seckill.exception.GlobalException;
 import com.learn.seckill.result.CodeMsg;
 import com.learn.seckill.service.SeckillUserService;
 import com.learn.seckill.utils.MD5Util;
-import com.learn.seckill.utils.RedisUtil;
+import com.learn.seckill.redis.RedisUtil;
 import com.learn.seckill.utils.UUIDUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.learn.seckill.utils.RedisConstant.*;
+import static com.learn.seckill.redis.RedisConstant.*;
 
 /**
  * @program: seckill
