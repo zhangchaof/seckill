@@ -51,10 +51,10 @@ public class MQReceiver {
         seckillService.seckill(user, goods);
     }
 
-//		@RabbitListener(queues=MQConfig.QUEUE)
-//		public void receive(String message) {
-//			log.info("receive message:"+message);
-//		}
+    @RabbitListener(queues = MQConfig.QUEUE)
+    public void receiveQueue(String message) {
+        log.info("receive message:" + message);
+    }
 //		
 //		@RabbitListener(queues=MQConfig.TOPIC_QUEUE1)
 //		public void receiveTopic1(String message) {
