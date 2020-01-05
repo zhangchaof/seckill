@@ -73,9 +73,9 @@
                 goodsCode: $("#goodsCode").val(),
             },
             success: function (data) {
-                console.log(data);
                 if (data.code == 0) {
-                    window.location.href = "/order_detail.htm?orderNo=" + data.data.orderNo;
+                    //window.location.href="/order_detail.htm?orderId="+data.data.id;
+                    getSeckillResult($("#goodsCode").val());
                 } else {
                     layer.msg(data.msg);
                 }
@@ -85,6 +85,42 @@
             }
         });
 
+    }
+
+    function getSeckillResult(goodsCode) {
+        g_showLoading();
+        $.ajax({
+            url: "/seckill/result",
+            type: "GET",
+            data: {
+                goodsCode: $("#goodsCode").val(),
+            },
+            success: function (data) {
+                if (data.code == 0) {
+                    var result = data.data;
+                    if (result < 0) {
+                        layer.msg("对不起，秒杀失败");
+                    } else if (result == 0) {//继续轮询
+                        setTimeout(function () {
+                            getSeckillResult(goodsCode);
+                        }, 1000);
+                    } else {
+                        layer.confirm("恭喜你，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
+                            function () {
+                                window.location.href = "/order_detail.htm?orderNo=" + result;
+                            },
+                            function () {
+                                layer.closeAll();
+                            });
+                    }
+                } else {
+                    layer.msg(data.msg);
+                }
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        });
     }
 
     function render(detail) {
@@ -150,6 +186,5 @@
             $("#seckillTip").html("秒杀已经结束");
         }
     }
-
 </script>
 </html>

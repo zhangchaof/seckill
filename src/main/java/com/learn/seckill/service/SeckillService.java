@@ -16,4 +16,6 @@ public interface SeckillService {
     SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(Long userId, String goodsCode);
 
     OrderVO seckill(SeckillUserVO userVO, GoodsVo goods);
+
+    Long getSeckillResult(Long userId, String goodsCode);
 }

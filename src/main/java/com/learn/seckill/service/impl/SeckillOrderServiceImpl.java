@@ -18,6 +18,7 @@ import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
  */
 @Service
 public class SeckillOrderServiceImpl implements SeckillOrderService {
+
     @Autowired
     private SeckillOrderEntityMapper seckillOrderEntityMapper;
 
@@ -31,7 +32,7 @@ public class SeckillOrderServiceImpl implements SeckillOrderService {
         seckillOrderEntity.setOrderNo(orderEntity.getOrderNo());
         seckillOrderEntity.setSeckillUserId(orderEntity.getSeckillUserId());
 
-        redisService.set(SECKILL_USER_ORDER.concat(orderEntity.getSeckillUserId().toString()).concat(orderEntity.getGoodsCode()),orderEntity);
+        redisService.set(SECKILL_USER_ORDER.concat(orderEntity.getSeckillUserId().toString()).concat(orderEntity.getGoodsCode()),seckillOrderEntity);
         return seckillOrderEntityMapper.insert(seckillOrderEntity);
     }
 }

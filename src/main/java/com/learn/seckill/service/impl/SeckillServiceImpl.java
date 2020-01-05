@@ -7,11 +7,13 @@ import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
+import com.learn.seckill.redis.RedisConstant;
 import com.learn.seckill.redis.RedisUtil;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillGoodsService;
 import com.learn.seckill.service.SeckillOrderService;
 import com.learn.seckill.service.SeckillService;
+import com.learn.seckill.utils.Constant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,13 +65,43 @@ public class SeckillServiceImpl implements SeckillService {
     @Transactional
     public OrderVO seckill(SeckillUserVO userVO, GoodsVo goods) {
         //减库存
-        seckillGoodsService.reduceStock(goods);
+        Integer stock = seckillGoodsService.reduceStock(goods);
         //下订单
-        OrderEntity orderEntity = orderService.createOrder(userVO, goods);
-        // 写入秒杀订单
-        seckillOrderService.createOrder(orderEntity);
-        OrderVO orderVO = new OrderVO();
-        BeanUtils.copyProperties(orderEntity, orderVO);
-        return orderVO;
+        if (stock > 0) {
+            OrderEntity orderEntity = orderService.createOrder(userVO, goods);
+            // 写入秒杀订单
+            seckillOrderService.createOrder(orderEntity);
+            OrderVO orderVO = new OrderVO();
+            BeanUtils.copyProperties(orderEntity, orderVO);
+            return orderVO;
+        } else {
+            setGoodsOver(goods.getGoodsCode());
+            return null;
+        }
+
+    }
+
+    @Override
+    public Long getSeckillResult(Long userId, String goodsCode) {
+
+        SeckillOrderEntity order = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
+        if (order != null) {//秒杀成功
+            return Long.valueOf(order.getOrderNo());
+        } else {
+            boolean isOver = getGoodsOver(goodsCode);
+            if (isOver) {
+                return Constant.SECKILL_FAILTURE;
+            } else {
+                return Constant.SECKILL_PEDDING;
+            }
+        }
+    }
+
+    private void setGoodsOver(String goodsCode) {
+        redisService.set(RedisConstant.SECKILL_OVER.concat(goodsCode), true);
+    }
+
+    private boolean getGoodsOver(String goodsCode) {
+        return redisService.hasKey(RedisConstant.SECKILL_OVER.concat(goodsCode));
     }
 }

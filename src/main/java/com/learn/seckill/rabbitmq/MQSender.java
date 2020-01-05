@@ -17,32 +17,32 @@ public class MQSender {
 
     public void sendSeckillMessage(SeckillMessage mm) {
         String msg = RedisUtil.beanToString(mm);
-        log.info("send message:" + msg);
+        log.info("send sendSeckillMessage {}", msg);
         amqpTemplate.convertAndSend(MQConfig.SECKILL_QUEUE, msg);
     }
 
     public void sendQueue(Object message) {
         String msg = RedisUtil.beanToString(message);
-        log.info("send message:" + msg);
+        log.info("send sendQueue:{}", msg);
         amqpTemplate.convertAndSend(MQConfig.QUEUE, msg);
     }
 
     public void sendTopic(Object message) {
         String msg = RedisUtil.beanToString(message);
-        log.info("send topic message:" + msg);
+        log.info("send topic message:{}", msg);
         //amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE, "topic.key1", msg + "1");
-       amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE, "topic.key2", msg + "2");
+        amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE, "topic.key2", msg + "2");
     }
 
     public void sendFanout(Object message) {
         String msg = RedisUtil.beanToString(message);
-        log.info("send fanout message:" + msg);
+        log.info("send fanout message:{}", msg);
         amqpTemplate.convertAndSend(MQConfig.FANOUT_EXCHANGE, "", msg);
     }
 
     public void sendHeader(Object message) {
         String msg = RedisUtil.beanToString(message);
-        log.info("send fanout message:" + msg);
+        log.info("send fanout message:{}", msg);
         MessageProperties properties = new MessageProperties();
         properties.setHeader("header1", "value1");
         properties.setHeader("header2", "value2");
