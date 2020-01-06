@@ -6,6 +6,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class MQSender {
     @Autowired
     AmqpTemplate amqpTemplate;
 
+    @Async(value = "asyncTaskExecutor")
     public void sendSeckillMessage(SeckillMessage mm) {
         String msg = RedisUtil.beanToString(mm);
         log.info("send message:" + msg);
