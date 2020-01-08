@@ -8,13 +8,13 @@ import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.rabbitmq.MQSender;
 import com.learn.seckill.rabbitmq.SeckillMessage;
 import com.learn.seckill.redis.RedisConstant;
+import com.learn.seckill.redis.RedisUtil;
 import com.learn.seckill.result.CodeMsg;
 import com.learn.seckill.result.Result;
 import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillService;
 import com.learn.seckill.service.SeckillUserService;
-import com.learn.seckill.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
 
 /**
  * @program: seckill:SeckillController
@@ -55,7 +59,7 @@ public class SeckillController {
     @Autowired
     MQSender sender;
 
-    @RequestMapping("/do_seckill")
+    @RequestMapping(value = "/do_seckill", method = RequestMethod.POST)
     public String list(Model model, SeckillUserVO user,
                        @RequestParam("goodsCode") String goodsCode) {
         model.addAttribute("user", user);
@@ -82,7 +86,7 @@ public class SeckillController {
         return "order_detail";
     }
 
-    @RequestMapping("/seckill")
+    @RequestMapping(value = "/seckill", method = RequestMethod.POST)
     @ResponseBody
     public Result<Integer> seckill(Model model, SeckillUserVO user,
                                    @RequestParam("goodsCode") String goodsCode) {
@@ -123,7 +127,7 @@ public class SeckillController {
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
     public Result<Long> seckillResult(Model model, SeckillUserVO user,
-                                         @RequestParam("goodsCode") String goodsCode) {
+                                      @RequestParam("goodsCode") String goodsCode) {
         model.addAttribute("user", user);
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
@@ -132,4 +136,25 @@ public class SeckillController {
         return Result.success(result);
     }
 
+    /**
+     * 回复到秒杀前数据
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<Boolean> reset(Model model) {
+        List<GoodsVo> goodsList = goodsService.listGoodsVo();
+        for (GoodsVo goods : goodsList) {
+            goods.setStockCount(10);
+            redisService.set(RedisConstant.SECKILL_GOODS_STOCK + goods.getGoodsCode(), 10);
+            Init.localOverMap.put(goods.getGoodsCode(), false);
+        }
+        redisService.delMatch(SECKILL_USER_ORDER);
+        redisService.delMatch(RedisConstant.SECKILL_OVER);
+
+        seckillService.reset(goodsList);
+        return Result.success(true);
+    }
 }

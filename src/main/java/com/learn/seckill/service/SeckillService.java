@@ -5,6 +5,8 @@ import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 
+import java.util.List;
+
 /**
  * @program: seckill
  * @description:
@@ -18,4 +20,6 @@ public interface SeckillService {
     OrderVO seckill(SeckillUserVO userVO, GoodsVo goods);
 
     Long getSeckillResult(Long userId, String goodsCode);
+
+    void reset(List<GoodsVo> goodsList);
 }

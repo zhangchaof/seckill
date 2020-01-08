@@ -2,12 +2,16 @@ package com.learn.seckill.redis;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -106,6 +110,20 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * 模糊匹配删除
+     *
+     * @param keyPrefix
+     */
+    public void delMatch(String keyPrefix) {
+        if (Objects.isNull(keyPrefix)) {
+            return;
+        }
+
+        Set<String> keys = redisTemplate.keys(keyPrefix.concat("*"));
+        Long del = redisTemplate.delete(keys);
+
+    }
 // ============================String=============================
 
     /**
@@ -117,7 +135,6 @@ public class RedisUtil {
     public Object get(String key) {
         return key == null ? null : redisTemplate.opsForValue().get(key);
     }
-
 
 
     public static <T> String beanToString(T value) {
@@ -136,7 +153,7 @@ public class RedisUtil {
         }
     }
 
-    public static  <T> T stringToBean(String str, Class<T> clazz) {
+    public static <T> T stringToBean(String str, Class<T> clazz) {
         if (str == null || str.length() <= 0 || clazz == null) {
             return null;
         }

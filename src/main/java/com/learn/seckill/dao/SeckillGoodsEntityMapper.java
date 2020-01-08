@@ -52,4 +52,6 @@ public interface SeckillGoodsEntityMapper {
     int updateByPrimaryKey(SeckillGoodsEntity record);
 
     int reduceStock(SeckillGoodsEntity seckillGoodsEntity);
+
+    int resetStock(SeckillGoodsEntity goodsEntity);
 }

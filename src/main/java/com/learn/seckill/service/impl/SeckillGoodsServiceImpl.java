@@ -7,6 +7,8 @@ import com.learn.seckill.service.SeckillGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: seckill:SeckillGoodsServiceImpl
  * @description:
@@ -24,5 +26,15 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
         SeckillGoodsEntity seckillGoodsEntity = new SeckillGoodsEntity();
         seckillGoodsEntity.setGoodsCode(goodsVo.getGoodsCode());
         return seckillGoodsEntityMapper.reduceStock(seckillGoodsEntity);
+    }
+
+    @Override
+    public void resetStock(List<GoodsVo> goodsList) {
+        for(GoodsVo goods : goodsList ) {
+            SeckillGoodsEntity g = new SeckillGoodsEntity();
+            g.setGoodsCode(goods.getGoodsCode());
+            g.setStockCount(goods.getStockCount());
+            seckillGoodsEntityMapper.resetStock(g);
+        }
     }
 }

@@ -9,16 +9,15 @@ import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
 import com.learn.seckill.redis.RedisConstant;
 import com.learn.seckill.redis.RedisUtil;
-import com.learn.seckill.service.OrderService;
-import com.learn.seckill.service.SeckillGoodsService;
-import com.learn.seckill.service.SeckillOrderService;
-import com.learn.seckill.service.SeckillService;
+import com.learn.seckill.service.*;
 import com.learn.seckill.utils.Constant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
@@ -51,7 +50,6 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     public SeckillOrderVO getSeckillOrderBySeckillUserIdGoodsCode(Long userId, String goodsCode) {
         SeckillOrderVO seckillOrderVO = null;
-        //  SeckillOrderEntity seckillOrderEntity = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
         String key = SECKILL_USER_ORDER + userId + goodsCode;
         SeckillOrderEntity seckillOrderEntity = (SeckillOrderEntity) redisService.get(key);
         if (!Objects.isNull(seckillOrderEntity)) {
@@ -62,7 +60,7 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public OrderVO seckill(SeckillUserVO userVO, GoodsVo goods) {
         //减库存
         Integer stock = seckillGoodsService.reduceStock(goods);
@@ -85,7 +83,8 @@ public class SeckillServiceImpl implements SeckillService {
     public Long getSeckillResult(Long userId, String goodsCode) {
 
         SeckillOrderEntity order = seckillOrderEntityMapper.getSeckillOrderBySeckillUserIdGoodsCode(userId, goodsCode);
-        if (order != null) {//秒杀成功
+        //秒杀成功
+        if (order != null) {
             return Long.valueOf(order.getOrderNo());
         } else {
             boolean isOver = getGoodsOver(goodsCode);
@@ -103,5 +102,13 @@ public class SeckillServiceImpl implements SeckillService {
 
     private boolean getGoodsOver(String goodsCode) {
         return redisService.hasKey(RedisConstant.SECKILL_OVER.concat(goodsCode));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void reset(List<GoodsVo> goodsList) {
+        seckillGoodsService.resetStock(goodsList);
+        seckillOrderEntityMapper.deleteSeckillOrders();
+        orderService.deleteOrders();
     }
 }

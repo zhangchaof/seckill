@@ -2,6 +2,8 @@ package com.learn.seckill.service;
 
 import com.learn.seckill.dto.GoodsVo;
 
+import java.util.List;
+
 /**
  * @program: seckill
  * @description:
@@ -14,4 +16,10 @@ public interface SeckillGoodsService {
      * 扣减库存
      */
     Integer reduceStock(GoodsVo goodsVo);
+
+    /**
+     * 还原库存
+     * @param goodsList
+     */
+    void resetStock(List<GoodsVo> goodsList);
 }

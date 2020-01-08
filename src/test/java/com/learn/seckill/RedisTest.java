@@ -26,4 +26,10 @@ public class RedisTest extends BaseTest {
         String value = redisUtil.get("test").toString();
         log.info("value:{}", value);
     }
+
+    @Test
+    public void delMatch() {
+        redisUtil.delMatch("test*");
+
+    }
 }

@@ -7,6 +7,7 @@ import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.utils.SnowflakeIdWorker;
+import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,5 +51,10 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity order = orderEntityMapper.getOrderByNo(orderNo);
         BeanUtils.copyProperties(order, orderVO);
         return orderVO;
+    }
+
+    @Override
+    public Integer deleteOrders() {
+        return orderEntityMapper.deleteOrders();
     }
 }

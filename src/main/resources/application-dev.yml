@@ -2,7 +2,8 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=true&autoReconnect=true&nullCatalogMeansCurrent=true&useAffectedRows=true
+    #公司虚拟机
+    url: jdbc:mysql://192.168.250.130:3306/seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=true&autoReconnect=true&nullCatalogMeansCurrent=true&useAffectedRows=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -16,7 +17,8 @@ spring:
   #集成redis
   redis:
     database: 0
-    host: 127.0.0.1
+    #公司虚拟机
+    host: 192.168.250.130
     password:
     port: 6379
     timeout: 1000

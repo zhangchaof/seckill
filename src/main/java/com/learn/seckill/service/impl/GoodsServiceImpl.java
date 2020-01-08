@@ -30,5 +30,4 @@ public class GoodsServiceImpl implements GoodsService {
     public GoodsVo getGoodsVoByGoodsCode(String goodsCode) {
         return goodsEntityMapper.getGoodsVoByGoodsCode(goodsCode);
     }
-
 }

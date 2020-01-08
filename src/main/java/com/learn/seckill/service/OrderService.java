@@ -26,4 +26,6 @@ public interface OrderService {
      * @return
      */
     OrderVO getOrderByNo(String orderNo);
+
+    Integer deleteOrders();
 }
