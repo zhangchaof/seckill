@@ -173,7 +173,7 @@ public class SeckillServiceImpl implements SeckillService {
         g.dispose();
         //把验证码存到redis中
         int rnd = calc(verifyCode);
-        redisService.set(RedisConstant.SECKILL_VERIFY_CODE.concat(user.getUserId().toString()).concat(goodsCode), rnd);
+        redisService.set(RedisConstant.SECKILL_VERIFY_CODE.concat(user.getUserId().toString()).concat(goodsCode), rnd,RedisConstant.SECKILL_VERIFY_CODE_EXPIRE);
         //输出图片
         return image;
     }

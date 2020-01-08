@@ -26,4 +26,6 @@ public class RedisConstant {
     public static final String SECKILL_VERIFY_CODE = "svc";
     public static final int SECKILL_VERIFY_CODE_EXPIRE = 300;
 
+    public static final String ACCESS = "access";
+
 }

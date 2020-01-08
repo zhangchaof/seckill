@@ -1,5 +1,6 @@
 package com.learn.seckill.controller;
 
+import com.learn.seckill.access.AccessLimit;
 import com.learn.seckill.config.Init;
 import com.learn.seckill.dto.GoodsVo;
 import com.learn.seckill.dto.OrderVO;
@@ -92,6 +93,7 @@ public class SeckillController {
     @RequestMapping(value = "/{path}/seckill", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "开始秒杀(优化)")
+    @AccessLimit(seconds = 5,maxCount = 5)
     public Result<Integer> seckill(Model model, SeckillUserVO user, @RequestParam("goodsCode") String goodsCode, @PathVariable("path") String path) {
         model.addAttribute("user", user);
         if (user == null) {

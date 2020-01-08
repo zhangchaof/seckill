@@ -1,5 +1,6 @@
 package com.learn.seckill.config;
 
+import com.learn.seckill.access.UserContext;
 import com.learn.seckill.dto.SeckillUserVO;
 import com.learn.seckill.entity.SeckillUserEntity;
 import com.learn.seckill.service.SeckillUserService;
@@ -36,33 +37,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         return clazz == SeckillUserVO.class;
     }
 
-    @Override
-    public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-
-        String paramToken = request.getParameter(RedisConstant.COOKI_NAME_TOKEN);
-        String cookieToken = getCookieValue(request, RedisConstant.COOKI_NAME_TOKEN);
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
-            return null;
-        }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
-        SeckillUserEntity userEntity = userService.getByToken(response, token);
-        SeckillUserVO userVO = new SeckillUserVO();
-        BeanUtils.copyProperties(userEntity, userVO);
-        return userVO;
-    }
-
-    private String getCookieValue(HttpServletRequest request, String cookieName) {
-        Cookie[] cookies = request.getCookies();
-        if (Objects.isNull(cookies)) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(cookieName)) {
-                return cookie.getValue();
-            }
-        }
-        return null;
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        return UserContext.getUser();
     }
 }
