@@ -21,6 +21,9 @@ public class RedisConstant {
     public static final String SECKILL_OVER = "seckll_over";
 
     public static final String SKILL_PATH = "sp";
-    public static final int SKILL_PATH_EXPIRE = 300;
+    public static final int SKILL_PATH_EXPIRE = 60;
+
+    public static final String SECKILL_VERIFY_CODE = "svc";
+    public static final int SECKILL_VERIFY_CODE_EXPIRE = 300;
 
 }

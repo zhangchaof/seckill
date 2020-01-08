@@ -22,6 +22,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
 import java.util.List;
 
 import static com.learn.seckill.redis.RedisConstant.SECKILL_USER_ORDER;
@@ -168,11 +172,36 @@ public class SeckillController {
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "秒杀地址隐藏")
-    public Result<String> getSeckillPath(SeckillUserVO user, @RequestParam("goodsCode") String goodsCode) {
+    public Result<String> getSeckillPath(SeckillUserVO user, @RequestParam("goodsCode") String goodsCode, @RequestParam(value = "verifyCode", defaultValue = "0") int verifyCode) {
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
         }
+
+        boolean check = seckillService.checkVerifyCode(user, goodsCode, verifyCode);
+
+        if (!check) {
+            return Result.error(CodeMsg.REQUEST_ILLEGAL);
+        }
         String path = seckillService.createSeckillPath(user, goodsCode);
         return Result.success(path);
+    }
+
+    @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<String> getSeckillVerifyCod(HttpServletResponse response, SeckillUserVO user, @RequestParam("goodsCode") String goodsCode) {
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        try {
+            BufferedImage image = seckillService.createVerifyCode(user, goodsCode);
+            OutputStream out = response.getOutputStream();
+            ImageIO.write(image, "JPEG", out);
+            out.flush();
+            out.close();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error(CodeMsg.SECKILL_FAIL);
+        }
     }
 }

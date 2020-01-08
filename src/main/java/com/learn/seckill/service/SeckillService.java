@@ -5,6 +5,7 @@ import com.learn.seckill.dto.OrderVO;
 import com.learn.seckill.dto.SeckillOrderVO;
 import com.learn.seckill.dto.SeckillUserVO;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -26,4 +27,8 @@ public interface SeckillService {
     String createSeckillPath(SeckillUserVO user, String goodsCode);
 
     boolean checkPath(SeckillUserVO user, String goodsCode, String path);
+
+    BufferedImage createVerifyCode(SeckillUserVO user, String goodsCode);
+
+    boolean checkVerifyCode(SeckillUserVO user, String goodsCode, int verifyCode);
 }

@@ -5,7 +5,8 @@ function getSeckillPath() {
         url: "/seckill/path",
         type: "GET",
         data: {
-            goodsCode: goodsCode
+            goodsCode: goodsCode,
+            verifyCode:$("#verifyCode").val()
         },
         success: function (data) {
             if (data.code == 0) {
@@ -133,8 +134,17 @@ function countDown() {
             clearTimeout(timeout);
         }
         $("#seckillTip").html("秒杀进行中");
+        $("#verifyCodeImg").attr("src", "/seckill/verifyCode?goodsCode="+$("#goodsCode").val());
+        $("#verifyCodeImg").show();
+        $("#verifyCode").show();
     } else {//秒杀已经结束
         $("#buyButton").attr("disabled", true);
         $("#seckillTip").html("秒杀已经结束");
+        $("#verifyCodeImg").hide();
+        $("#verifyCode").hide();
     }
+};
+
+function refreshVerifyCode(){
+    $("#verifyCodeImg").attr("src", "/seckill/verifyCode?goodsCode="+$("#goodsCode").val()+"&timestamp="+new Date().getTime());
 };
