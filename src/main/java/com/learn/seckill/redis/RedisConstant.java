@@ -20,4 +20,7 @@ public class RedisConstant {
     public static final String SECKILL_GOODS_STOCK = "gs";
     public static final String SECKILL_OVER = "seckll_over";
 
+    public static final String SKILL_PATH = "sp";
+    public static final int SKILL_PATH_EXPIRE = 300;
+
 }

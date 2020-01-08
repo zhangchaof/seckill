@@ -9,11 +9,15 @@ import com.learn.seckill.entity.OrderEntity;
 import com.learn.seckill.entity.SeckillOrderEntity;
 import com.learn.seckill.redis.RedisConstant;
 import com.learn.seckill.redis.RedisUtil;
-import com.learn.seckill.service.*;
+import com.learn.seckill.service.OrderService;
+import com.learn.seckill.service.SeckillGoodsService;
+import com.learn.seckill.service.SeckillOrderService;
+import com.learn.seckill.service.SeckillService;
 import com.learn.seckill.utils.Constant;
+import com.learn.seckill.utils.MD5Util;
+import com.learn.seckill.utils.UUIDUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,5 +114,25 @@ public class SeckillServiceImpl implements SeckillService {
         seckillGoodsService.resetStock(goodsList);
         seckillOrderEntityMapper.deleteSeckillOrders();
         orderService.deleteOrders();
+    }
+
+    @Override
+    public String createSeckillPath(SeckillUserVO user, String goodsCode) {
+        if (Objects.isNull(user) || Objects.isNull(goodsCode)) {
+            return null;
+        }
+        String str = MD5Util.md5(UUIDUtil.uuid() + "123456");
+        redisService.set(RedisConstant.SKILL_PATH.concat(user.getUserId().toString()).concat(goodsCode), str, RedisConstant.SKILL_PATH_EXPIRE);
+        return str;
+    }
+
+    @Override
+    public boolean checkPath(SeckillUserVO user, String goodsCode, String path) {
+        if (user == null || path == null) {
+            return false;
+        }
+
+        String pathOld = redisService.get(RedisConstant.SKILL_PATH.concat(user.getUserId().toString()).concat(goodsCode)) + "";
+        return path.equals(pathOld);
     }
 }

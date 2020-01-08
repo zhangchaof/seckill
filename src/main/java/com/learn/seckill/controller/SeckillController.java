@@ -15,14 +15,12 @@ import com.learn.seckill.service.GoodsService;
 import com.learn.seckill.service.OrderService;
 import com.learn.seckill.service.SeckillService;
 import com.learn.seckill.service.SeckillUserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,6 +58,7 @@ public class SeckillController {
     MQSender sender;
 
     @RequestMapping(value = "/do_seckill", method = RequestMethod.POST)
+    @ApiOperation(value = "开始秒杀")
     public String list(Model model, SeckillUserVO user,
                        @RequestParam("goodsCode") String goodsCode) {
         model.addAttribute("user", user);
@@ -86,13 +85,19 @@ public class SeckillController {
         return "order_detail";
     }
 
-    @RequestMapping(value = "/seckill", method = RequestMethod.POST)
+    @RequestMapping(value = "/{path}/seckill", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> seckill(Model model, SeckillUserVO user,
-                                   @RequestParam("goodsCode") String goodsCode) {
+    @ApiOperation(value = "开始秒杀(优化)")
+    public Result<Integer> seckill(Model model, SeckillUserVO user, @RequestParam("goodsCode") String goodsCode, @PathVariable("path") String path) {
         model.addAttribute("user", user);
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        //验证path
+        boolean check = seckillService.checkPath(user, goodsCode, path);
+
+        if (!check) {
+            return Result.error(CodeMsg.REQUEST_ILLEGAL);
         }
         //判断库存
         //内存标记，减少redis访问
@@ -126,6 +131,7 @@ public class SeckillController {
      */
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value = "秒杀结果")
     public Result<Long> seckillResult(Model model, SeckillUserVO user,
                                       @RequestParam("goodsCode") String goodsCode) {
         model.addAttribute("user", user);
@@ -144,6 +150,7 @@ public class SeckillController {
      */
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     @ResponseBody
+    @ApiOperation(value = "秒杀数据还原,方便重新秒杀")
     public Result<Boolean> reset(Model model) {
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         for (GoodsVo goods : goodsList) {
@@ -156,5 +163,16 @@ public class SeckillController {
 
         seckillService.reset(goodsList);
         return Result.success(true);
+    }
+
+    @RequestMapping(value = "/path", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation(value = "秒杀地址隐藏")
+    public Result<String> getSeckillPath(SeckillUserVO user, @RequestParam("goodsCode") String goodsCode) {
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        String path = seckillService.createSeckillPath(user, goodsCode);
+        return Result.success(path);
     }
 }

@@ -22,4 +22,8 @@ public interface SeckillService {
     Long getSeckillResult(Long userId, String goodsCode);
 
     void reset(List<GoodsVo> goodsList);
+
+    String createSeckillPath(SeckillUserVO user, String goodsCode);
+
+    boolean checkPath(SeckillUserVO user, String goodsCode, String path);
 }
