@@ -93,7 +93,7 @@ public class SeckillController {
     @RequestMapping(value = "/{path}/seckill", method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = "开始秒杀(优化)")
-    @AccessLimit(seconds = 5,maxCount = 5)
+    @AccessLimit(seconds = 5, maxCount = 5)
     public Result<Integer> seckill(Model model, SeckillUserVO user, @RequestParam("goodsCode") String goodsCode, @PathVariable("path") String path) {
         model.addAttribute("user", user);
         if (user == null) {
@@ -174,6 +174,7 @@ public class SeckillController {
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody
     @ApiOperation(value = "秒杀地址隐藏")
+    @AccessLimit(seconds = 500, maxCount = 5)
     public Result<String> getSeckillPath(SeckillUserVO user, @RequestParam("goodsCode") String goodsCode, @RequestParam(value = "verifyCode", defaultValue = "0") int verifyCode) {
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
