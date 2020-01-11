@@ -2,8 +2,9 @@ spring:
   datasource:
     username: root
     password: root
-    #公司虚拟机
-    url: jdbc:mysql://192.168.250.130:3306/seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=true&autoReconnect=true&nullCatalogMeansCurrent=true&useAffectedRows=true
+    #公司虚拟机 ip:192.168.250.130
+    # home ip : 192.168.206.133
+    url: jdbc:mysql://192.168.206.133:3306/seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=true&autoReconnect=true&nullCatalogMeansCurrent=true&useAffectedRows=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -17,8 +18,7 @@ spring:
   #集成redis
   redis:
     database: 0
-    #公司虚拟机
-    host: 192.168.250.130
+    host: 192.168.206.133
     password:
     port: 6379
     timeout: 1000
@@ -63,10 +63,12 @@ spring:
       enabled: false
   #rabbitmq
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.206.133
     port: 5672
-    username: guest
-    password: guest
+   # username: guest
+   # password: guest
+    username: admin
+    password: admin
     virtual-host: /
     listener:
       simple: 
