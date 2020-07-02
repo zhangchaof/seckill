@@ -136,7 +136,7 @@
                         <artifactId>mysql-connector-java</artifactId>
                         <!-- 高低版本切换 -->
                         <!--<version>8.0.11</version>-->
-                        <version>5.1.42</version>
+                        <version>8.0.16</version>
                     </dependency>
                 </dependencies>
             </plugin>
